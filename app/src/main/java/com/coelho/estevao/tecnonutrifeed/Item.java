@@ -4,13 +4,12 @@ package com.coelho.estevao.tecnonutrifeed;
  * Created by estevao on 06/11/17.
  */
 
-public class FeedItem {
 
+public class Item extends RequestClass {
     private String image;
     private String date;
     private String energy;
     private Profile profile;
-
 
     public Profile getProfile() {
         return profile;

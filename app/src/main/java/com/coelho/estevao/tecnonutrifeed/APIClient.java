@@ -1,7 +1,5 @@
 package com.coelho.estevao.tecnonutrifeed;
 
-import android.text.TextUtils;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -37,11 +35,9 @@ public class APIClient {
 
                 builder.client(httpClient.build());
                 retrofit = builder.build();
-                return retrofit.create(serviceClass);
 
             }
-
-
+            return retrofit.create(serviceClass);
         }
     }
 }

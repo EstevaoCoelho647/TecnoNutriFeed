@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by estevao on 06/11/17.
@@ -20,10 +21,10 @@ import butterknife.BindView;
 
 public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.MyViewHolder> {
 
-    List<FeedItem> feedItems;
+    List<Item> items;
 
     public FeedItemAdapter() {
-        this.feedItems = new ArrayList<>();
+        this.items = new ArrayList<>();
     }
 
     @Override
@@ -34,36 +35,40 @@ public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.MyView
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        FeedItem feedItem = feedItems.get(position);
-        holder.textViewDescription.setText(feedItem.getDate());
-        holder.textViewKcal.setText(feedItem.getEnergy());
+        Item item = items.get(position);
+        holder.textViewDescription.setText(item.getDate());
+        holder.textViewKcal.setText(item.getEnergy() + " Kcal");
 
         Picasso.with(holder.postImageView.getContext())
-                .load(feedItem.getImage())
+                .load(item.getImage()).placeholder(R.drawable.ic_local_pizza)
                 .into(holder.postImageView);
 
 
         Picasso.with(holder.imageViewuserImage.getContext())
-                .load(feedItem.getProfile().getImage())
+                .load(item.getProfile().getImage()).placeholder(R.drawable.ic_person)
                 .into(holder.imageViewuserImage);
 
-        holder.textViewUserName.setText(feedItem.getProfile().getName());
-        holder.textViewUserSubtitle.setText(feedItem.getProfile().getGeneralGoal());
+        holder.textViewUserName.setText(item.getProfile().getName());
+        if (item.getProfile().getGeneralGoal() != null) {
+            holder.textViewUserSubtitle.setVisibility(View.VISIBLE);
+            holder.textViewUserSubtitle.setText(item.getProfile().getGeneralGoal());
+        } else
+            holder.textViewUserSubtitle.setVisibility(View.GONE);
 
     }
 
     @Override
     public int getItemCount() {
-        return feedItems.size();
+        return items.size();
     }
 
-    public List<FeedItem> getFeedItems() {
-        return feedItems;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setFeedItems(List<FeedItem> feedItems) {
-        this.feedItems.clear();
-        this.feedItems.addAll(feedItems);
+    public void setItems(List<Item> items) {
+        this.items.clear();
+        this.items.addAll(items);
         notifyDataSetChanged();
     }
 
@@ -84,6 +89,7 @@ public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.MyView
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

@@ -10,7 +10,8 @@ import retrofit2.http.GET;
  */
 
 public interface APIInterface {
-    @GET("/feed")
-    Call<List<FeedItem>> findFeedItems();
+
+    @GET("feed")
+    Call<FeedItems> findFeedItems();
 
 }
