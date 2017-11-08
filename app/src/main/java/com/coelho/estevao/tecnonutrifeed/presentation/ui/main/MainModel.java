@@ -1,4 +1,6 @@
-package com.coelho.estevao.tecnonutrifeed;
+package com.coelho.estevao.tecnonutrifeed.presentation.ui.main;
+
+import com.coelho.estevao.tecnonutrifeed.domain.repository.FeedRepository;
 
 /**
  * Created by estevao on 06/11/17.

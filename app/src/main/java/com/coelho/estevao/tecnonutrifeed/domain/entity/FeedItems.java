@@ -1,4 +1,4 @@
-package com.coelho.estevao.tecnonutrifeed;
+package com.coelho.estevao.tecnonutrifeed.domain.entity;
 
 import java.util.List;
 

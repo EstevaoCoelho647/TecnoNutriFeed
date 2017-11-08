@@ -1,8 +1,9 @@
-package com.coelho.estevao.tecnonutrifeed;
+package com.coelho.estevao.tecnonutrifeed.domain.repository;
 
 import android.util.Log;
 
-import java.util.ArrayList;
+import com.coelho.estevao.tecnonutrifeed.domain.entity.FeedItems;
+import com.coelho.estevao.tecnonutrifeed.presentation.ui.main.MainContract;
 
 import retrofit2.Call;
 import retrofit2.Callback;

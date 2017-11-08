@@ -1,10 +1,15 @@
-package com.coelho.estevao.tecnonutrifeed;
+package com.coelho.estevao.tecnonutrifeed.presentation.ui.main;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import com.coelho.estevao.tecnonutrifeed.presentation.ui.main.adapter.FeedItemAdapter;
+import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
+import com.coelho.estevao.tecnonutrifeed.R;
 
 import java.util.List;
 
@@ -28,11 +33,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mainPresenter.onAttachView(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        feedItemAdapter = new FeedItemAdapter();
+        feedItemAdapter = new FeedItemAdapter(mainPresenter);
         recyclerView.setAdapter(feedItemAdapter);
 
 
         mainPresenter.loadFeedItems();
+    }
+
+    @Override
+    public Activity getActivityFromView() {
+        return this;
     }
 
     @Override

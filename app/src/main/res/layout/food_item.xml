@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textViewFoodName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Food Name"
+        android:textColor="@color/md_grey_800"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewUnit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="X unities (Yg)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.407"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFoodName" />
+
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/md_grey_300"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUnit" />
+
+
+    <TextView
+        android:id="@+id/textViewCal"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Cal"
+        android:textAlignment="center"
+        android:textColor="@color/md_grey_800"
+        app:layout_constraintEnd_toStartOf="@+id/textViewCarb"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+
+    <TextView
+        android:id="@+id/textViewCarb"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Carb"
+        android:textAlignment="center"
+        android:textColor="@color/md_grey_800"
+        app:layout_constraintEnd_toStartOf="@+id/textViewProt"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewCal"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <TextView
+        android:id="@+id/textViewProt"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Prot"
+        android:textAlignment="center"
+        android:textColor="@color/md_grey_800"
+        app:layout_constraintEnd_toStartOf="@+id/textViewGord"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewCarb"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <TextView
+        android:id="@+id/textViewGord"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Gord"
+        android:textAlignment="center"
+        android:textColor="@color/md_grey_800"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewProt"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+
+    <TextView
+        android:id="@+id/textViewCalValue"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="X Kcal"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/textViewCarbValue"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGord" />
+
+    <TextView
+        android:id="@+id/textViewCarbValue"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="X g"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/textViewProtValue"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewCalValue"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGord" />
+
+    <TextView
+        android:id="@+id/textViewProtValue"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="X g"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/textViewGordValue"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewCarbValue"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGord" />
+
+    <TextView
+        android:id="@+id/textViewGordValue"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="X g"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewProtValue"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGord" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.coelho.estevao.tecnonutrifeed;
+package com.coelho.estevao.tecnonutrifeed.domain.repository;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
