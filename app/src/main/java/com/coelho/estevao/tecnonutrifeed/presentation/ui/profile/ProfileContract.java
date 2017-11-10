@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Profile;
+import com.coelho.estevao.tecnonutrifeed.domain.entity.ProfileRequest;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class ProfileContract {
 
     public interface Model {
 
+        void findProfileInformation(Profile profile);
     }
 
     public interface View {
@@ -24,7 +26,7 @@ public class ProfileContract {
 
         void showSnackBar(String message);
 
-        void onFindFeedItemsSuccess(List<Item> list);
+        void onFindProfileItemsSuccess(List<Item> list);
 
         void bindProfileFields(Profile profile);
     }
@@ -33,5 +35,12 @@ public class ProfileContract {
         void onAttachView(View view);
 
         void getExtras(Bundle extras);
+
+        void onMiniItemClick(Item item);
+
+        void onFindProfileInformationSuccess(ProfileRequest body);
+
+        void onFindProfileInformationFailure(String message);
+
     }
 }

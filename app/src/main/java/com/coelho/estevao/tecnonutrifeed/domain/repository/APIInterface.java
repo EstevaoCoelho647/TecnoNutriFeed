@@ -2,6 +2,7 @@ package com.coelho.estevao.tecnonutrifeed.domain.repository;
 
 import com.coelho.estevao.tecnonutrifeed.domain.entity.FeedItem;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.FeedItems;
+import com.coelho.estevao.tecnonutrifeed.domain.entity.ProfileRequest;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -18,5 +19,8 @@ public interface APIInterface {
 
     @GET("feed/{hash}")
     Call<FeedItem> findFeedItem(@Path("hash") String hash);
+
+    @GET("profile/{id}")
+    Call<ProfileRequest> findProfileInformation(@Path("id") Long id);
 
 }

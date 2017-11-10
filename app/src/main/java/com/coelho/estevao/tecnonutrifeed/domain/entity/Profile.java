@@ -10,10 +10,19 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Profile implements Parcelable {
+    private Long id;
     private String image;
     private String name;
     @SerializedName("general_goal")
     private String generalGoal;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getImage() {
         return image;
@@ -39,6 +48,9 @@ public class Profile implements Parcelable {
         this.generalGoal = generalGoal;
     }
 
+    public Profile() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -46,21 +58,20 @@ public class Profile implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
         dest.writeString(this.image);
         dest.writeString(this.name);
         dest.writeString(this.generalGoal);
     }
 
-    public Profile() {
-    }
-
     protected Profile(Parcel in) {
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.image = in.readString();
         this.name = in.readString();
         this.generalGoal = in.readString();
     }
 
-    public static final Parcelable.Creator<Profile> CREATOR = new Parcelable.Creator<Profile>() {
+    public static final Creator<Profile> CREATOR = new Creator<Profile>() {
         @Override
         public Profile createFromParcel(Parcel source) {
             return new Profile(source);

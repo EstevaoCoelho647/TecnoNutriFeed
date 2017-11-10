@@ -1,6 +1,7 @@
 package com.coelho.estevao.tecnonutrifeed.presentation.ui.item;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.coelho.estevao.tecnonutrifeed.R;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
 import com.coelho.estevao.tecnonutrifeed.presentation.ui.item.adapter.FoodItemAdapter;
+import com.coelho.estevao.tecnonutrifeed.presentation.ui.profile.ProfileActivity;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -63,6 +65,7 @@ public class FeedItemActivity extends AppCompatActivity implements FeedItemContr
         foodItemAdapter = new FoodItemAdapter();
         recyclerViewFoods.setAdapter(foodItemAdapter);
 
+
     }
 
     @Override
@@ -81,7 +84,7 @@ public class FeedItemActivity extends AppCompatActivity implements FeedItemContr
     }
 
     @Override
-    public void bindItemFields(Item item) {
+    public void bindItemFields(final Item item) {
         textViewDescription.setText(item.getDate());
         textViewKcal.setText(item.getEnergy() + " Kcal");
 
@@ -99,6 +102,15 @@ public class FeedItemActivity extends AppCompatActivity implements FeedItemContr
             textViewUserSubtitle.setText(item.getProfile().getGeneralGoal());
         } else
             textViewUserSubtitle.setVisibility(View.GONE);
+
+        viewHolderProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goToProfileActivity = new Intent(FeedItemActivity.this, ProfileActivity.class);
+                goToProfileActivity.putExtra("PROFILE", item.getProfile());
+                startActivity(goToProfileActivity);
+            }
+        });
 
     }
 }
