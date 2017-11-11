@@ -9,8 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
 import com.coelho.estevao.tecnonutrifeed.R;
+import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
 import com.coelho.estevao.tecnonutrifeed.presentation.ui.main.MainPresenter;
 import com.squareup.picasso.Picasso;
 
@@ -88,8 +88,10 @@ public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.MyView
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(List<Item> items, boolean clear) {
+        if (clear)
         this.items.clear();
+
         this.items.addAll(items);
         notifyDataSetChanged();
     }

@@ -21,14 +21,14 @@ public class FeedRepository {
         requestService = APIClient.ServiceGenerator.createService(APIInterface.class);
     }
 
-    public void findFeedItems(final MainContract.Presenter presenter) {
+    public void findFeedItems(final MainContract.Presenter presenter, Integer p, Long t, final boolean clear) {
         Log.d("FeedRepository", "findind Feed Items");
-        requestService.findFeedItems().enqueue(new Callback<FeedItems>() {
+        requestService.findFeedItems(p, t).enqueue(new Callback<FeedItems>() {
             @Override
             public void onResponse(Call<FeedItems> call, Response<FeedItems> response) {
                 if (response.isSuccessful()) {
                     Log.d("findFeedItems", "success");
-                    presenter.onFindFeedItemsSuccess(response.body().getItems());
+                    presenter.onFindFeedItemsSuccess(response.body(), clear);
                 } else {
                     Log.d("findFeedItems", "failure");
                     presenter.onFindFeedItemsFailure(response.message());

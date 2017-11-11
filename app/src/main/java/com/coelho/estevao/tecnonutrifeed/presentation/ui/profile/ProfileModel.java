@@ -15,8 +15,8 @@ public class ProfileModel implements ProfileContract.Model {
     }
 
     @Override
-    public void findProfileInformation(Profile profile) {
+    public void findProfileInformation(Profile profile, Integer p, Long t, boolean clear) {
         ProfileRepository profileRepository = new ProfileRepository();
-        profileRepository.findProfileInformation(presenter, profile.getId());
+        profileRepository.findProfileInformation(presenter, profile.getId(), p, t, clear);
     }
 }

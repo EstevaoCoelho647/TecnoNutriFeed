@@ -6,7 +6,7 @@ import java.util.List;
  * Created by estevao on 10/11/17.
  */
 
-public class ProfileRequest {
+public class ProfileRequest extends RequestClass {
 
     private Profile profile;
     private List<Item> items;

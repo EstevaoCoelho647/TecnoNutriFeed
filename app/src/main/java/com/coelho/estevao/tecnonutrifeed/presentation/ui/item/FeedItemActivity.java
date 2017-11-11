@@ -14,8 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.coelho.estevao.tecnonutrifeed.R;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
+import com.coelho.estevao.tecnonutrifeed.presentation.ui.base.BaseReloadActivity;
 import com.coelho.estevao.tecnonutrifeed.presentation.ui.item.adapter.FoodItemAdapter;
 import com.coelho.estevao.tecnonutrifeed.presentation.ui.profile.ProfileActivity;
 import com.squareup.picasso.Picasso;
@@ -27,7 +29,7 @@ import butterknife.ButterKnife;
  * Created by estevao on 07/11/17.
  */
 
-public class FeedItemActivity extends AppCompatActivity implements FeedItemContract.View {
+public class FeedItemActivity extends BaseReloadActivity implements FeedItemContract.View {
 
     @BindView(R.id.textViewDescription)
     public TextView textViewDescription;
@@ -47,16 +49,19 @@ public class FeedItemActivity extends AppCompatActivity implements FeedItemContr
     public LinearLayout viewHolderItem;
     @BindView(R.id.recyclerViewFoods)
     public RecyclerView recyclerViewFoods;
+
     FoodItemAdapter foodItemAdapter;
+    FeedItemPresenter feedItemPresenter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_feed_item);
+        super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
 
-        FeedItemPresenter feedItemPresenter = new FeedItemPresenter();
+        feedItemPresenter = new FeedItemPresenter();
         feedItemPresenter.onAttachView(this);
 
         feedItemPresenter.getExtras(getIntent().getExtras());
@@ -64,7 +69,6 @@ public class FeedItemActivity extends AppCompatActivity implements FeedItemContr
         recyclerViewFoods.setLayoutManager(new LinearLayoutManager(this));
         foodItemAdapter = new FoodItemAdapter();
         recyclerViewFoods.setAdapter(foodItemAdapter);
-
 
     }
 
@@ -81,6 +85,7 @@ public class FeedItemActivity extends AppCompatActivity implements FeedItemContr
     @Override
     public void onFindFeedItemInformationSuccess(Item item) {
         foodItemAdapter.setItems(item.getFoods());
+        setRefreshing(false);
     }
 
     @Override
@@ -111,6 +116,10 @@ public class FeedItemActivity extends AppCompatActivity implements FeedItemContr
                 startActivity(goToProfileActivity);
             }
         });
+    }
 
+    @Override
+    public void onRefresh() {
+        feedItemPresenter.requestItemInformation();
     }
 }

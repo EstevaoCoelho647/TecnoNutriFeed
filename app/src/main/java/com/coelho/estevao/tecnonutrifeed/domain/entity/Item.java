@@ -14,9 +14,14 @@ public class Item extends RequestClass implements Parcelable {
     private String feedHash;
     private String image;
     private String date;
-    private String energy;
+    private float energy;
+    private float carbohydrate;
+    private double fat;
+    private float protein;
     private Profile profile;
     private List<Food> foods;
+
+
 
     public String getFeedHash() {
         return feedHash;
@@ -58,12 +63,36 @@ public class Item extends RequestClass implements Parcelable {
         this.date = date;
     }
 
-    public String getEnergy() {
+    public float getEnergy() {
         return energy;
     }
 
-    public void setEnergy(String energy) {
+    public void setEnergy(float energy) {
         this.energy = energy;
+    }
+
+    public float getCarbohydrate() {
+        return carbohydrate;
+    }
+
+    public void setCarbohydrate(float carbohydrate) {
+        this.carbohydrate = carbohydrate;
+    }
+
+    public double getFat() {
+        return fat;
+    }
+
+    public void setFat(double fat) {
+        this.fat = fat;
+    }
+
+    public float getProtein() {
+        return protein;
+    }
+
+    public void setProtein(float protein) {
+        this.protein = protein;
     }
 
     public Item() {
@@ -79,7 +108,10 @@ public class Item extends RequestClass implements Parcelable {
         dest.writeString(this.feedHash);
         dest.writeString(this.image);
         dest.writeString(this.date);
-        dest.writeString(this.energy);
+        dest.writeFloat(this.energy);
+        dest.writeFloat(this.carbohydrate);
+        dest.writeDouble(this.fat);
+        dest.writeFloat(this.protein);
         dest.writeParcelable(this.profile, flags);
         dest.writeTypedList(this.foods);
     }
@@ -88,7 +120,10 @@ public class Item extends RequestClass implements Parcelable {
         this.feedHash = in.readString();
         this.image = in.readString();
         this.date = in.readString();
-        this.energy = in.readString();
+        this.energy = in.readFloat();
+        this.carbohydrate = in.readFloat();
+        this.fat = in.readDouble();
+        this.protein = in.readFloat();
         this.profile = in.readParcelable(Profile.class.getClassLoader());
         this.foods = in.createTypedArrayList(Food.CREATOR);
     }

@@ -1,7 +1,9 @@
 package com.coelho.estevao.tecnonutrifeed.presentation.ui.main;
 
 import android.app.Activity;
+import android.support.v7.widget.RecyclerView;
 
+import com.coelho.estevao.tecnonutrifeed.domain.entity.FeedItems;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Profile;
 
@@ -15,7 +17,7 @@ public class MainContract {
 
     public interface Model {
 
-        void requestFeedItems();
+        void requestFeedItems(Integer p, Long t, boolean clear);
     }
 
     public interface View {
@@ -24,20 +26,22 @@ public class MainContract {
 
         void showSnackBar(String message);
 
-        void onFindFeedItemsSuccess(List<Item> list);
+        void onFindFeedItemsSuccess(List<Item> list, boolean clear);
     }
 
     public interface Presenter {
         void onAttachView(View view);
 
-        void loadFeedItems();
+        void loadFeedItems(Integer p, Long t, boolean clear);
 
-        void onFindFeedItemsSuccess(List<Item> body);
+        void onFindFeedItemsSuccess(FeedItems body, boolean clear);
 
         void onFindFeedItemsFailure(String message);
 
         void onItemClick(Item item);
 
         void onProfileClick(Profile profile);
+
+        void addScrollListener(RecyclerView recyclerView);
     }
 }

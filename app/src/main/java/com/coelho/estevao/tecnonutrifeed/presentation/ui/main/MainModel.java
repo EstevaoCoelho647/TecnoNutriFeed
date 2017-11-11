@@ -14,7 +14,7 @@ public class MainModel implements MainContract.Model {
     }
 
     @Override
-    public void requestFeedItems() {
-        new FeedRepository().findFeedItems(presenter);
+    public void requestFeedItems(Integer p, Long t, boolean clear) {
+        new FeedRepository().findFeedItems(presenter, p, t, clear);
     }
 }

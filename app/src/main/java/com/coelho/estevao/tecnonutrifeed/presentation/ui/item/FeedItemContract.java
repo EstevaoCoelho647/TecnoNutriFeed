@@ -32,6 +32,8 @@ public class FeedItemContract {
 
         void getExtras(Bundle extras);
 
+        void requestItemInformation();
+
         void onFindItemInformationSuccess(Item items);
 
         void onFindItemInformationFailure(String message);

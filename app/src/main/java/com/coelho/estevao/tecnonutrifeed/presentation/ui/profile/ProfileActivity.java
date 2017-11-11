@@ -3,7 +3,6 @@ package com.coelho.estevao.tecnonutrifeed.presentation.ui.profile;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.ImageView;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import com.coelho.estevao.tecnonutrifeed.R;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Profile;
+import com.coelho.estevao.tecnonutrifeed.presentation.ui.base.BaseReloadActivity;
 import com.coelho.estevao.tecnonutrifeed.presentation.ui.profile.adapter.MiniItemAdapter;
 import com.squareup.picasso.Picasso;
 
@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  * Created by estevao on 07/11/17.
  */
 
-public class ProfileActivity extends AppCompatActivity implements ProfileContract.View {
+public class ProfileActivity extends BaseReloadActivity implements ProfileContract.View {
 
 
     @BindView(R.id.imageViewUser)
@@ -37,15 +37,16 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
     RecyclerView recyclerViewUserItems;
     MiniItemAdapter miniItemAdapter;
 
+    ProfilePresenter profilePresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
 
-        ProfilePresenter profilePresenter = new ProfilePresenter();
+        profilePresenter = new ProfilePresenter();
         profilePresenter.onAttachView(this);
 
         recyclerViewUserItems.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
@@ -53,6 +54,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
         recyclerViewUserItems.setAdapter(miniItemAdapter);
 
         profilePresenter.getExtras(getIntent().getExtras());
+
+        profilePresenter.addScrollListener(recyclerViewUserItems);
 
 
     }
@@ -68,8 +71,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
     }
 
     @Override
-    public void onFindProfileItemsSuccess(List<Item> list) {
-        miniItemAdapter.setItems(list);
+    public void onFindProfileItemsSuccess(List<Item> list, boolean clear) {
+        miniItemAdapter.setItems(list, clear);
+        setRefreshing(false);
     }
 
     @Override
@@ -81,5 +85,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
                 .load(profile.getImage()).placeholder(R.drawable.ic_person)
                 .into(imageViewUser);
 
+    }
+
+    @Override
+    public void onRefresh() {
+        profilePresenter.findProfileInformation(null, null, true);
     }
 }

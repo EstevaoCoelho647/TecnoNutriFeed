@@ -64,8 +64,10 @@ public class MiniItemAdapter extends RecyclerView.Adapter<MiniItemAdapter.MyView
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(List<Item> items, boolean clear) {
+        if (clear)
         this.items.clear();
+
         this.items.addAll(items);
         notifyDataSetChanged();
     }

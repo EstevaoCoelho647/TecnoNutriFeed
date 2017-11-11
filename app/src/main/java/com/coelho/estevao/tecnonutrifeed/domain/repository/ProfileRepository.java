@@ -21,14 +21,14 @@ public class ProfileRepository {
         requestService = APIClient.ServiceGenerator.createService(APIInterface.class);
     }
 
-    public void findProfileInformation(final ProfileContract.Presenter presenter, Long id) {
+    public void findProfileInformation(final ProfileContract.Presenter presenter, Long id, Integer p, Long t, final boolean clear) {
         Log.d("ProfileRepository", "findind profile information");
-        requestService.findProfileInformation(id).enqueue(new Callback<ProfileRequest>() {
+        requestService.findProfileInformation(id, p, t).enqueue(new Callback<ProfileRequest>() {
             @Override
             public void onResponse(Call<ProfileRequest> call, Response<ProfileRequest> response) {
                 if (response.isSuccessful()) {
                     Log.d("findProfileInformation", "success");
-                    presenter.onFindProfileInformationSuccess(response.body());
+                    presenter.onFindProfileInformationSuccess(response.body(), clear);
                 } else {
                     Log.d("findProfileInformation", "failure");
                     presenter.onFindProfileInformationFailure(response.message());
