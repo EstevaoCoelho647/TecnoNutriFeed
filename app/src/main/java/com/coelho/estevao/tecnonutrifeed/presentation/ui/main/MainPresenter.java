@@ -75,7 +75,7 @@ public class MainPresenter implements MainContract.Presenter {
                     int numItems = recyclerView.getAdapter().getItemCount();
                     if (pos >= numItems - 2 && !requesting) {
                         requesting = true;
-                        loadFeedItems(feedItems.getPage(), feedItems.getTimeMillis(), false);
+                        loadFeedItems(feedItems.getPage()+1, feedItems.getTimeMillis(), false);
                     }
                 }
             });

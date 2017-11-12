@@ -82,7 +82,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
                     if (totalItemCount <= lastVisibleItem+6 && !requesting) {
                         requesting = true;
-                        findProfileInformation(body.getPage(), body.getTimeMillis(), false);
+                        findProfileInformation(body.getPage()+1, body.getTimeMillis(), false);
                     }
                 }
             });
