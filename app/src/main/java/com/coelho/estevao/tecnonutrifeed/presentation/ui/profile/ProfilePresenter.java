@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
+import com.coelho.estevao.tecnonutrifeed.R;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Profile;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.ProfileRequest;
 import com.coelho.estevao.tecnonutrifeed.presentation.ui.item.FeedItemActivity;
+import com.coelho.estevao.tecnonutrifeed.util.Constants;
 
 /**
  * Created by estevao on 06/11/17.
@@ -36,7 +38,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     @Override
     public void getExtras(Bundle extras) {
         if (extras != null) {
-            profile = extras.getParcelable("PROFILE");
+            profile = extras.getParcelable(Constants.BUNDLE_PROFILE_NAME);
             view.bindProfileFields(profile);
             findProfileInformation(null, null, true);
         }
@@ -62,8 +64,8 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     @Override
-    public void onFindProfileInformationFailure(String message) {
-        view.showSnackBar(message);
+    public void onFindProfileInformationFailure() {
+        view.showSnackBar(view.getActivityFromView().getResources().getString(R.string.request_error_profile));
         requesting = false;
     }
 

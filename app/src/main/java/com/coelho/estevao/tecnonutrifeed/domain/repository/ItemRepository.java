@@ -31,14 +31,14 @@ public class ItemRepository {
                     presenter.onFindItemInformationSuccess(response.body().getItem());
                 } else {
                     Log.d("findItemInformation", "failure");
-                    presenter.onFindItemInformationFailure(response.message());
+                    presenter.onFindItemInformationFailure();
                 }
             }
 
             @Override
             public void onFailure(Call<FeedItem> call, Throwable t) {
                 Log.d("findItemInformation", "failure");
-                presenter.onFindItemInformationFailure(t.getMessage());
+                presenter.onFindItemInformationFailure();
             }
         });
     }

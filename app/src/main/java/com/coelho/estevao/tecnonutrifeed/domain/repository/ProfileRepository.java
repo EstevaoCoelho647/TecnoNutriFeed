@@ -31,14 +31,14 @@ public class ProfileRepository {
                     presenter.onFindProfileInformationSuccess(response.body(), clear);
                 } else {
                     Log.d("findProfileInformation", "failure");
-                    presenter.onFindProfileInformationFailure(response.message());
+                    presenter.onFindProfileInformationFailure();
                 }
             }
 
             @Override
             public void onFailure(Call<ProfileRequest> call, Throwable t) {
                 Log.d("findProfileInformation", "failure");
-                presenter.onFindProfileInformationFailure(t.getMessage());
+                presenter.onFindProfileInformationFailure();
             }
         });
     }

@@ -31,14 +31,14 @@ public class FeedRepository {
                     presenter.onFindFeedItemsSuccess(response.body(), clear);
                 } else {
                     Log.d("findFeedItems", "failure");
-                    presenter.onFindFeedItemsFailure(response.message());
+                    presenter.onFindFeedItemsFailure();
                 }
             }
 
             @Override
             public void onFailure(Call<FeedItems> call, Throwable t) {
                 Log.d("onFailure", "failure");
-                presenter.onFindFeedItemsFailure(t.getMessage());
+                presenter.onFindFeedItemsFailure();
             }
         });
     }

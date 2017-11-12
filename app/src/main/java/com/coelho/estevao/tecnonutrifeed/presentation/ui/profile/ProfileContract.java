@@ -43,7 +43,7 @@ public class ProfileContract {
 
         void onFindProfileInformationSuccess(ProfileRequest body, boolean clear);
 
-        void onFindProfileInformationFailure(String message);
+        void onFindProfileInformationFailure();
 
         void addScrollListener(RecyclerView recyclerViewUserItems);
     }

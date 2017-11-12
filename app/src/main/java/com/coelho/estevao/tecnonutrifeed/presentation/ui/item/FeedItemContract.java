@@ -14,6 +14,8 @@ public class FeedItemContract {
     public interface Model {
 
         void requestItemInformation(Item item);
+
+        void setItemLiked(Item item, boolean liked);
     }
 
     public interface View {
@@ -36,6 +38,11 @@ public class FeedItemContract {
 
         void onFindItemInformationSuccess(Item items);
 
-        void onFindItemInformationFailure(String message);
+        void onFindItemInformationFailure();
+
+        void onButtonLikeClicked(Item item, boolean b);
+
+        void onBackPressed();
+
     }
 }

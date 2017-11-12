@@ -1,6 +1,7 @@
 package com.coelho.estevao.tecnonutrifeed.presentation.ui.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,19 +45,30 @@ public class MainActivity extends BaseReloadActivity implements MainContract.Vie
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mainPresenter.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public Activity getActivityFromView() {
         return this;
     }
 
     @Override
     public void showSnackBar(String message) {
-        Snackbar.make(recyclerView, message, Snackbar.LENGTH_SHORT);
+        Snackbar.make(recyclerView, message, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void onFindFeedItemsSuccess(List<Item> list, boolean clear) {
         feedItemAdapter.setItems(list, clear);
         setRefreshing(false);
+    }
+
+    @Override
+    public void notifyItemOnAdapter(int position) {
+        feedItemAdapter.notifyItemChanged(position);
     }
 
     @Override

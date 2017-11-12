@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,12 +13,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.baoyz.widget.PullRefreshLayout;
 import com.coelho.estevao.tecnonutrifeed.R;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
+import com.coelho.estevao.tecnonutrifeed.domain.persistence.ItemDatabaseRepository;
 import com.coelho.estevao.tecnonutrifeed.presentation.ui.base.BaseReloadActivity;
 import com.coelho.estevao.tecnonutrifeed.presentation.ui.item.adapter.FoodItemAdapter;
 import com.coelho.estevao.tecnonutrifeed.presentation.ui.profile.ProfileActivity;
+import com.coelho.estevao.tecnonutrifeed.util.Constants;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -49,6 +49,10 @@ public class FeedItemActivity extends BaseReloadActivity implements FeedItemCont
     public LinearLayout viewHolderItem;
     @BindView(R.id.recyclerViewFoods)
     public RecyclerView recyclerViewFoods;
+    @BindView(R.id.buttonLike)
+    public ImageView buttonLike;
+    @BindView(R.id.imageViewFavorite)
+    public ImageView imageViewFavorite;
 
     FoodItemAdapter foodItemAdapter;
     FeedItemPresenter feedItemPresenter;
@@ -69,7 +73,6 @@ public class FeedItemActivity extends BaseReloadActivity implements FeedItemCont
         recyclerViewFoods.setLayoutManager(new LinearLayoutManager(this));
         foodItemAdapter = new FoodItemAdapter();
         recyclerViewFoods.setAdapter(foodItemAdapter);
-
     }
 
     @Override
@@ -108,11 +111,37 @@ public class FeedItemActivity extends BaseReloadActivity implements FeedItemCont
         } else
             textViewUserSubtitle.setVisibility(View.GONE);
 
+
+        boolean alreadyLiked = ItemDatabaseRepository.getItemById(item.getFeedHash()).isLiked();
+        item.setLiked(alreadyLiked);
+        if (alreadyLiked) {
+            imageViewFavorite.setScaleX(1);
+            imageViewFavorite.setScaleY(1);
+        } else {
+            imageViewFavorite.setScaleX(0);
+            imageViewFavorite.setScaleY(0);
+        }
+
+        buttonLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (item.isLiked()) {
+                    imageViewFavorite.animate().scaleX(0).scaleY(0).start();
+                    item.setLiked(false);
+                    feedItemPresenter.onButtonLikeClicked(item, false);
+                } else {
+                    imageViewFavorite.animate().scaleX(1).scaleY(1).start();
+                    item.setLiked(true);
+                    feedItemPresenter.onButtonLikeClicked(item, true);
+                }
+            }
+        });
+
         viewHolderProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent goToProfileActivity = new Intent(FeedItemActivity.this, ProfileActivity.class);
-                goToProfileActivity.putExtra("PROFILE", item.getProfile());
+                goToProfileActivity.putExtra(Constants.BUNDLE_PROFILE_NAME, item.getProfile());
                 startActivity(goToProfileActivity);
             }
         });
@@ -121,5 +150,10 @@ public class FeedItemActivity extends BaseReloadActivity implements FeedItemCont
     @Override
     public void onRefresh() {
         feedItemPresenter.requestItemInformation();
+    }
+
+    @Override
+    public void onBackPressed() {
+        feedItemPresenter.onBackPressed();
     }
 }

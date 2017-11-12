@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.coelho.estevao.tecnonutrifeed.R;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
+import com.coelho.estevao.tecnonutrifeed.domain.persistence.ItemDatabaseRepository;
 import com.coelho.estevao.tecnonutrifeed.presentation.ui.main.MainPresenter;
 import com.squareup.picasso.Picasso;
 
@@ -41,7 +42,7 @@ public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.MyView
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Item item = items.get(position);
         holder.textViewDescription.setText(item.getDate());
         holder.textViewKcal.setText(item.getEnergy() + " Kcal");
@@ -62,11 +63,35 @@ public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.MyView
         } else
             holder.textViewUserSubtitle.setVisibility(View.GONE);
 
+        boolean alreadyLiked = ItemDatabaseRepository.getItemById(item.getFeedHash()).isLiked();
+        item.setLiked(alreadyLiked);
+        if (alreadyLiked) {
+            holder.imageViewFavorite.setScaleX(1);
+            holder.imageViewFavorite.setScaleY(1);
+        } else {
+            holder.imageViewFavorite.setScaleX(0);
+            holder.imageViewFavorite.setScaleY(0);
+        }
+
+        holder.buttonLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (item.isLiked()) {
+                    holder.imageViewFavorite.animate().scaleX(0).scaleY(0).start();
+                    item.setLiked(false);
+                    mainPresenter.onButtonLikeClicked(item, false);
+                } else {
+                    holder.imageViewFavorite.animate().scaleX(1).scaleY(1).start();
+                    item.setLiked(true);
+                    mainPresenter.onButtonLikeClicked(item, true);
+                }
+            }
+        });
 
         holder.viewHolderItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainPresenter.onItemClick(item);
+                mainPresenter.onItemClick(item, position);
             }
         });
 
@@ -114,7 +139,10 @@ public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.MyView
         public RelativeLayout viewHolderProfile;
         @BindView(R.id.viewHolderItem)
         public LinearLayout viewHolderItem;
-
+        @BindView(R.id.buttonLike)
+        public ImageView buttonLike;
+        @BindView(R.id.imageViewFavorite)
+        public ImageView imageViewFavorite;
 
         public MyViewHolder(View itemView) {
             super(itemView);

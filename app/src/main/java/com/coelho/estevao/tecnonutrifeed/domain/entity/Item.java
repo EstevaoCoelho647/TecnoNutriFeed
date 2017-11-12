@@ -3,14 +3,17 @@ package com.coelho.estevao.tecnonutrifeed.domain.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by estevao on 06/11/17.
  */
 
 
-public class Item extends RequestClass implements Parcelable {
+public class Item extends RealmObject implements Parcelable {
+    @PrimaryKey
     private String feedHash;
     private String image;
     private String date;
@@ -19,9 +22,25 @@ public class Item extends RequestClass implements Parcelable {
     private double fat;
     private float protein;
     private Profile profile;
-    private List<Food> foods;
+    private int meal;
+    private RealmList<Food> foods;
+    private boolean liked;
 
+    public int getMeal() {
+        return meal;
+    }
 
+    public void setMeal(int meal) {
+        this.meal = meal;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
 
     public String getFeedHash() {
         return feedHash;
@@ -29,14 +48,6 @@ public class Item extends RequestClass implements Parcelable {
 
     public void setFeedHash(String feedHash) {
         this.feedHash = feedHash;
-    }
-
-    public List<Food> getFoods() {
-        return foods;
-    }
-
-    public void setFoods(List<Food> foods) {
-        this.foods = foods;
     }
 
     public Profile getProfile() {
@@ -96,6 +107,15 @@ public class Item extends RequestClass implements Parcelable {
     }
 
     public Item() {
+        foods = new RealmList<>();
+    }
+
+    public RealmList<Food> getFoods() {
+        return foods;
+    }
+
+    public void setFoods(RealmList<Food> foods) {
+        this.foods = foods;
     }
 
     @Override
@@ -113,7 +133,9 @@ public class Item extends RequestClass implements Parcelable {
         dest.writeDouble(this.fat);
         dest.writeFloat(this.protein);
         dest.writeParcelable(this.profile, flags);
+        dest.writeInt(this.meal);
         dest.writeTypedList(this.foods);
+        dest.writeByte(this.liked ? (byte) 1 : (byte) 0);
     }
 
     protected Item(Parcel in) {
@@ -125,7 +147,10 @@ public class Item extends RequestClass implements Parcelable {
         this.fat = in.readDouble();
         this.protein = in.readFloat();
         this.profile = in.readParcelable(Profile.class.getClassLoader());
-        this.foods = in.createTypedArrayList(Food.CREATOR);
+        this.meal = in.readInt();
+        this.foods = new RealmList<>();
+        this.foods.addAll(in.createTypedArrayList(Food.CREATOR));
+        this.liked = in.readByte() != 0;
     }
 
     public static final Creator<Item> CREATOR = new Creator<Item>() {

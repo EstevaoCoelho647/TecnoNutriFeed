@@ -1,6 +1,7 @@
 package com.coelho.estevao.tecnonutrifeed.presentation.ui.item;
 
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
+import com.coelho.estevao.tecnonutrifeed.domain.persistence.ItemDatabaseRepository;
 import com.coelho.estevao.tecnonutrifeed.domain.repository.ItemRepository;
 
 /**
@@ -18,5 +19,10 @@ public class FeedItemModel implements FeedItemContract.Model {
     public void requestItemInformation(Item item) {
         ItemRepository itemRepository = new ItemRepository();
         itemRepository.findItemInformation(presenter, item.getFeedHash());
+    }
+
+    @Override
+    public void setItemLiked(Item item, boolean liked) {
+        ItemDatabaseRepository.updateItem(item, liked);
     }
 }

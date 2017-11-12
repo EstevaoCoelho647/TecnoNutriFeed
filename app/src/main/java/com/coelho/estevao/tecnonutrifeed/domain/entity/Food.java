@@ -3,11 +3,14 @@ package com.coelho.estevao.tecnonutrifeed.domain.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import io.realm.RealmModel;
+import io.realm.RealmObject;
+
 /**
  * Created by estevao on 07/11/17.
  */
 
-public class Food implements Parcelable {
+public class Food extends RealmObject implements Parcelable {
     private String description;
     private String measure;
     private int amount;
@@ -81,6 +84,9 @@ public class Food implements Parcelable {
         this.protein = protein;
     }
 
+    public Food() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -98,9 +104,6 @@ public class Food implements Parcelable {
         dest.writeFloat(this.protein);
     }
 
-    public Food() {
-    }
-
     protected Food(Parcel in) {
         this.description = in.readString();
         this.measure = in.readString();
@@ -112,7 +115,7 @@ public class Food implements Parcelable {
         this.protein = in.readFloat();
     }
 
-    public static final Parcelable.Creator<Food> CREATOR = new Parcelable.Creator<Food>() {
+    public static final Creator<Food> CREATOR = new Creator<Food>() {
         @Override
         public Food createFromParcel(Parcel source) {
             return new Food(source);
