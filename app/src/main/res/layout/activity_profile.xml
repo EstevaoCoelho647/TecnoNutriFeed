@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.baoyz.widget.PullRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageViewUser"
@@ -25,12 +22,12 @@
     <TextView
         android:id="@+id/textViewUserName"
         android:layout_width="match_parent"
-        android:maxLines="2"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
+        android:maxLines="2"
         android:text="User Long Name"
         android:textColor="@color/md_grey_800"
         android:textSize="20sp"
@@ -61,25 +58,36 @@
         android:background="@color/md_grey_300"
         app:layout_constraintTop_toBottomOf="@+id/textViewUserGoal" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewUserItems"
-        android:layout_width="0dp"
-        android:layout_marginBottom="50dp"
-        android:paddingStart="2dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/md_grey_100"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view">
 
-    </android.support.v7.widget.RecyclerView>
+        <com.baoyz.widget.PullRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="9">
 
-        <com.mopub.mobileads.MoPubView
-            android:id="@+id/adview"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewUserItems"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/md_grey_100"
+                android:paddingStart="2dp">
 
-    </android.support.constraint.ConstraintLayout>
-</com.baoyz.widget.PullRefreshLayout>
+            </android.support.v7.widget.RecyclerView>
+        </com.baoyz.widget.PullRefreshLayout>
+
+        <include
+            layout="@layout/footer_ad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
