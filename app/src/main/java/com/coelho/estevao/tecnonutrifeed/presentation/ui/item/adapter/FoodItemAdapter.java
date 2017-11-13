@@ -44,6 +44,10 @@ public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.MyView
         holder.textViewProtValue.setText(food.getFat() + " g");
         holder.textViewCarbValue.setText(food.getCarbohydrate() + " g");
 
+        if (food.getMeasure() != null){
+            holder.textViewUnit.setVisibility(View.VISIBLE);
+        }else
+            holder.textViewUnit.setVisibility(View.GONE);
     }
 
     @Override
@@ -75,6 +79,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.MyView
         public TextView textViewProtValue;
         @BindView(R.id.textViewCarbValue)
         public TextView textViewCarbValue;
+
 
 
         public MyViewHolder(View itemView) {

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.coelho.estevao.tecnonutrifeed.R;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
+import com.coelho.estevao.tecnonutrifeed.domain.entity.Meal;
 import com.coelho.estevao.tecnonutrifeed.domain.persistence.ItemDatabaseRepository;
 import com.coelho.estevao.tecnonutrifeed.presentation.ui.main.MainPresenter;
 import com.squareup.picasso.Picasso;
@@ -62,6 +63,8 @@ public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.MyView
             holder.textViewUserSubtitle.setText(item.getProfile().getGeneralGoal());
         } else
             holder.textViewUserSubtitle.setVisibility(View.GONE);
+
+        holder.textViewMeal.setText(Meal.values()[item.getMeal()].getValue());
 
         boolean alreadyLiked = ItemDatabaseRepository.getItemById(item.getFeedHash()).isLiked();
         item.setLiked(alreadyLiked);
@@ -143,6 +146,9 @@ public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.MyView
         public ImageView buttonLike;
         @BindView(R.id.imageViewFavorite)
         public ImageView imageViewFavorite;
+        @BindView(R.id.textViewMeal)
+        public TextView textViewMeal;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);

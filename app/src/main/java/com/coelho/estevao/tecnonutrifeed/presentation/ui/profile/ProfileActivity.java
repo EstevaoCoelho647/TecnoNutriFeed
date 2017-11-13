@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,6 +49,9 @@ public class ProfileActivity extends BaseReloadActivity implements ProfileContra
         profilePresenter = new ProfilePresenter();
         profilePresenter.onAttachView(this);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         recyclerViewUserItems.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
         miniItemAdapter = new MiniItemAdapter(profilePresenter);
         recyclerViewUserItems.setAdapter(miniItemAdapter);
@@ -56,6 +60,15 @@ public class ProfileActivity extends BaseReloadActivity implements ProfileContra
 
         profilePresenter.addScrollListener(recyclerViewUserItems);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     public Activity getActivityFromView() {

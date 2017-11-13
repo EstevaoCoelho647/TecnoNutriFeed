@@ -23,7 +23,7 @@ public class MainModel implements MainContract.Model {
 
     @Override
     public void saveOrUpdateDatabase(FeedItems feedItems) {
-        ItemDatabaseRepository.saveOrUpdate(feedItems.getItems());
+        ItemDatabaseRepository.save(feedItems.getItems());
     }
 
     @Override

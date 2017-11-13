@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.coelho.estevao.tecnonutrifeed.R;
 import com.coelho.estevao.tecnonutrifeed.domain.entity.Item;
+import com.coelho.estevao.tecnonutrifeed.domain.entity.Meal;
 import com.coelho.estevao.tecnonutrifeed.domain.persistence.ItemDatabaseRepository;
 import com.coelho.estevao.tecnonutrifeed.presentation.ui.base.BaseReloadActivity;
 import com.coelho.estevao.tecnonutrifeed.presentation.ui.item.adapter.FoodItemAdapter;
@@ -53,6 +55,8 @@ public class FeedItemActivity extends BaseReloadActivity implements FeedItemCont
     public ImageView buttonLike;
     @BindView(R.id.imageViewFavorite)
     public ImageView imageViewFavorite;
+    @BindView(R.id.textViewMeal)
+    public TextView textViewMeal;
 
     FoodItemAdapter foodItemAdapter;
     FeedItemPresenter feedItemPresenter;
@@ -65,6 +69,9 @@ public class FeedItemActivity extends BaseReloadActivity implements FeedItemCont
 
         ButterKnife.bind(this);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         feedItemPresenter = new FeedItemPresenter();
         feedItemPresenter.onAttachView(this);
 
@@ -73,6 +80,14 @@ public class FeedItemActivity extends BaseReloadActivity implements FeedItemCont
         recyclerViewFoods.setLayoutManager(new LinearLayoutManager(this));
         foodItemAdapter = new FoodItemAdapter();
         recyclerViewFoods.setAdapter(foodItemAdapter);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -111,16 +126,19 @@ public class FeedItemActivity extends BaseReloadActivity implements FeedItemCont
         } else
             textViewUserSubtitle.setVisibility(View.GONE);
 
-
-        boolean alreadyLiked = ItemDatabaseRepository.getItemById(item.getFeedHash()).isLiked();
-        item.setLiked(alreadyLiked);
-        if (alreadyLiked) {
-            imageViewFavorite.setScaleX(1);
-            imageViewFavorite.setScaleY(1);
-        } else {
-            imageViewFavorite.setScaleX(0);
-            imageViewFavorite.setScaleY(0);
+        Item itemById = ItemDatabaseRepository.getItemById(item.getFeedHash());
+        if (itemById != null) {
+            boolean alreadyLiked = itemById.isLiked();
+            item.setLiked(alreadyLiked);
+            if (alreadyLiked) {
+                imageViewFavorite.setScaleX(1);
+                imageViewFavorite.setScaleY(1);
+            } else {
+                imageViewFavorite.setScaleX(0);
+                imageViewFavorite.setScaleY(0);
+            }
         }
+        textViewMeal.setText(Meal.values()[item.getMeal()].getValue());
 
         buttonLike.setOnClickListener(new View.OnClickListener() {
             @Override

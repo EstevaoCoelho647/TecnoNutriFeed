@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TecnoNutriFeed</string>
+    <string name="request_error_feed">Não foi possível atualizar o feed.</string>
+    <string name="request_error_profile">Não foi possível encontrar esse perfil.</string>
+    <string name="request_error_item">Não foi possível encontrar esse item.</string>
+    <string name="label_food_description">Total Consumido</string>
+</resources>

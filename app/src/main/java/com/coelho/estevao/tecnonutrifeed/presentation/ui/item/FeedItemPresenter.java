@@ -49,7 +49,7 @@ public class FeedItemPresenter implements FeedItemContract.Presenter {
     @Override
     public void onFindItemInformationSuccess(Item item) {
         Food food = new Food();
-        food.setDescription("Total Consumido");
+        food.setDescription(view.getActivityFromView().getString(R.string.label_food_description));
         food.setEnergy(item.getEnergy());
         food.setCarbohydrate(item.getCarbohydrate());
         food.setFat(item.getFat());

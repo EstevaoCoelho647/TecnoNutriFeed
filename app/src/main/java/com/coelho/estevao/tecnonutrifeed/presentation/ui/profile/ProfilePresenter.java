@@ -52,7 +52,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     @Override
     public void onMiniItemClick(Item item) {
         Intent goToProfileActivity = new Intent(view.getActivityFromView(), FeedItemActivity.class);
-        goToProfileActivity.putExtra("ITEM", item);
+        goToProfileActivity.putExtra(Constants.BUNDLE_ITEM_NAME, item);
         view.getActivityFromView().startActivity(goToProfileActivity);
     }
 

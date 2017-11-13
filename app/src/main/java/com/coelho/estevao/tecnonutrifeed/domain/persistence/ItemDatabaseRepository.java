@@ -18,7 +18,7 @@ import static android.content.ContentValues.TAG;
 public class ItemDatabaseRepository {
     private static final String ID = "feedHash";
 
-    public static void saveOrUpdate(final Item item) {
+    public static void save(final Item item) {
         Log.d(TAG, "Saving item...");
         Realm realm = Realm.getDefaultInstance();
 
@@ -35,10 +35,22 @@ public class ItemDatabaseRepository {
         });
     }
 
-    public static void saveOrUpdate(List<Item> array) {
+    public static void saveOrUpdate(final Item item) {
+        Log.d(TAG, "Saving item...");
+        Realm realm = Realm.getDefaultInstance();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(item);
+            }
+        });
+    }
+
+    public static void save(List<Item> array) {
         Log.d(TAG, "Saving item array...");
         for (Item item : array) {
-            saveOrUpdate(item);
+            save(item);
         }
     }
 

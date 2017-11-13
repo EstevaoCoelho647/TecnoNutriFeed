@@ -9,12 +9,18 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "AD_UNIT_ID", "\"dae03b5e8f3c4978b9d37aa9a7aa7a1c\""
+
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    productFlavors {
+
     }
 }
 
@@ -43,7 +49,16 @@ dependencies {
     //RefreshLayout
     compile 'com.baoyz.pullrefreshlayout:library:1.2.0'
 
+    compile 'com.google.firebase:firebase-config:11.6.0'
+
+    compile('com.mopub:mopub-sdk-banner:4.16.0@aar') {
+        transitive = true
+        exclude module: 'libAvid-mopub' // To exclude AVID
+        exclude module: 'moat-mobile-app-kit' // To exclude Moat
+    }
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
+apply plugin: 'com.google.gms.google-services'
